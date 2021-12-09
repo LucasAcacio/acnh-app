@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ActivityIndicator } from 'react-native';
 
-function FishCard( props ) {
+function VillagerCard( props ) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const getFish = async () => {
+    const getVillager = async () => {
         try {
-            const response = await fetch('http://acnhapi.com/v1/fish/' + props.id);
+            const response = await fetch('http://acnhapi.com/v1/villagers/' + props.id);
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -18,7 +18,7 @@ function FishCard( props ) {
     }
 
     useEffect(() => {
-        getFish();
+        getVillager();
         return () => {
             setData({});
         }
@@ -33,15 +33,12 @@ function FishCard( props ) {
                 <View style={{justifyContent:'center'}}>
                     <Text style={styles.header}>{data.name['name-USen']}</Text>
                     <Text style={styles.cardText}>Price: {data.price}</Text>
-                    <Text style={styles.cardText}>Rarity: {data.availability['rarity']}</Text>
-                    <Text style={styles.cardText}>Location: {data.availability['location']}</Text>
+                    <Text style={styles.cardText}>Gender: {data.gender}</Text>
+                    <Text style={styles.cardText}>Personality: {data.personality}</Text>
                 </View>
-                <View style={styles.separator}/>
                 <View style={styles.cardInformationText}>
-                    <Text style={styles.cardTextTitle}>Availability:</Text>
-                    <Text style={styles.cardText2}>Months(N): {data.availability['month-northern']}</Text>
-                    <Text style={styles.cardText2}>Months(S): {data.availability['month-southern']}</Text>
-                    <Text style={styles.cardTimeText}>Time:{data.availability['time-array'].toString()}</Text>
+                    <Text style={styles.cardText2}>BirthDay: {data.birthday}</Text>
+                    <Text style={styles.cardText2}>Species: {data.species}</Text>
                 </View>
             </View>
          )}
@@ -117,4 +114,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default FishCard;
+export default VillagerCard;

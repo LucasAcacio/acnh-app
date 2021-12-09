@@ -1,56 +1,71 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
-import FishCard from './components/FishCard';
+import React from 'react';
+import { StyleSheet } from 'react-native';
+import { Tab, TabView } from 'react-native-elements';
 
-export default function App() {
-  var fishCards = [];
-  const maxFish = 80;
+import BugPage from './components/BugPage';
+import FishPage from './components/FishPage';
+import SeaCreaturePage from './components/SeaCreaturePage';
+import VillagerPage from './components/VillagerPage';
 
-  for (let i = 1; i <= maxFish; i++) {
-    fishCards.push(
-      <FishCard id={i}/>
-    )
-  }
+export default () => {
+  const [index, setIndex] = React.useState(0);
 
   return (
-    <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.headerText}>Animal{'\n'}Crossing</Text>
-      </View> 
-      <ScrollView style={{width: "100%"}}>
-        { fishCards }
-      </ScrollView>
-    </View>
+    <>
+      <Tab
+        value={index}
+        onChange={(e) => setIndex(e)}
+        indicatorStyle={{
+          backgroundColor: '#f7d359',
+          height: 3,
+          paddingTop:15,
+        }}
+        variant="primary"
+      >
+        <Tab.Item
+          style={styles.tabContainer}
+          title="Fish"
+          titleStyle={{ fontSize: 14, color:'#f7d359' }}
+        />
+        <Tab.Item
+          style={styles.tabContainer}
+          title="Bugs"
+          titleStyle={{ fontSize: 14, color:'#f7d359' }}
+        />
+        <Tab.Item
+          style={styles.tabContainer}
+          title="Sea Creatures"
+          titleStyle={{ fontSize: 12, color:'#f7d359' }}
+        />
+        <Tab.Item
+          style={styles.tabContainer}
+          title="Villgers"
+          titleStyle={{ fontSize: 14, color:'#f7d359' }}
+        />
+      </Tab>
+
+      <TabView value={index} onChange={setIndex} animationType="spring">
+        <TabView.Item>
+          <FishPage/>
+        </TabView.Item>
+        <TabView.Item>
+          <BugPage/>
+        </TabView.Item>
+        <TabView.Item>
+          <SeaCreaturePage/>
+        </TabView.Item>
+        <TabView.Item>
+          <VillagerPage/>
+        </TabView.Item>
+      </TabView>
+    </>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    width:"100%",
-    height: "15%",
-    backgroundColor: "#786951",
-    justifyContent: 'center',
-    alignItems:'center',
-    borderBottomColor:"#5C513E",
-    borderRightColor: "#5C513E",
-    borderLeftColor: "#8f7d61",
-    borderTopColor: "#8f7d61",
-    borderWidth: 5,
-    paddingTop: 20
-  },
-  headerText: {
-    fontSize: 40,
-    color: '#F1C232',
-    textShadowColor:'#000',
-    textShadowRadius: 10,
-    textAlign: 'center'
-  },
-  container: {
-    height: "100%",
-    width: "100%",
-    flex: 1,
-    backgroundColor: '#F8EEBC',
-    alignItems: 'center',
+  tabContainer: {
+      alignItems: 'center',
+      backgroundColor: '#786951',
+      paddingTop: 20
   },
 });

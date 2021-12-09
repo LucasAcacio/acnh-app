@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ActivityIndicator } from 'react-native';
 
-function FishCard( props ) {
+function SeaCreatureCard( props ) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const getFish = async () => {
+    const getSeaCreature = async () => {
         try {
-            const response = await fetch('http://acnhapi.com/v1/fish/' + props.id);
+            const response = await fetch('http://acnhapi.com/v1/sea/' + props.id);
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -18,7 +18,7 @@ function FishCard( props ) {
     }
 
     useEffect(() => {
-        getFish();
+        getSeaCreature();
         return () => {
             setData({});
         }
@@ -33,8 +33,7 @@ function FishCard( props ) {
                 <View style={{justifyContent:'center'}}>
                     <Text style={styles.header}>{data.name['name-USen']}</Text>
                     <Text style={styles.cardText}>Price: {data.price}</Text>
-                    <Text style={styles.cardText}>Rarity: {data.availability['rarity']}</Text>
-                    <Text style={styles.cardText}>Location: {data.availability['location']}</Text>
+                    <Text style={styles.cardText}>Speed: {data.speed}</Text>
                 </View>
                 <View style={styles.separator}/>
                 <View style={styles.cardInformationText}>
@@ -117,4 +116,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default FishCard;
+export default SeaCreatureCard;

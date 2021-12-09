@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Image, ActivityIndicator } from 'react-native';
 
-function FishCard( props ) {
+function BugCard( props ) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
-    const getFish = async () => {
+    const getBug = async () => {
         try {
-            const response = await fetch('http://acnhapi.com/v1/fish/' + props.id);
+            const response = await fetch('http://acnhapi.com/v1/bugs/' + props.id);
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -18,7 +18,7 @@ function FishCard( props ) {
     }
 
     useEffect(() => {
-        getFish();
+        getBug();
         return () => {
             setData({});
         }
@@ -117,4 +117,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default FishCard;
+export default BugCard;
